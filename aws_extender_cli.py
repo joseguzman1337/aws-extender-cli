@@ -32,9 +32,11 @@ def load_buckets(bucket_type: str, filepath: str) -> list:
     with open(filepath, "r") as buckets:
         bucket_list = buckets.read()
         if bucket_type != "azure":
-            bucket_list = re.findall(r"(?:(?:gs|s3)://)?([\w.-]+)/?", bucket_list, re.I)
+            bucket_list = re.findall(
+                r"(?:(?:gs|s3)://)?([\w.-]+)/?", bucket_list, re.I)
         else:
-            bucket_list = re.findall(r"((?:\w+://)?[\w.-]+/?)", bucket_list, re.I)
+            bucket_list = re.findall(
+                r"((?:\w+://)?[\w.-]+/?)", bucket_list, re.I)
     return bucket_list
 
 
@@ -473,7 +475,8 @@ def test_az_bucket(bucket_uri: str, _, wordlist_path: str = "") -> str:
             keys += enumerate_keys(bucket_uri, "azure", wordlist_path)
             if keys:
                 issues.append(
-                    "Public read access for blobs only\n\t* %s" % "\n\t* ".join(keys)
+                    "Public read access for blobs only\n\t* %s" % "\n\t* ".join(
+                        keys)
                 )
     except (URLError, ExpatError):
         return ""
